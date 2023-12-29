@@ -28,6 +28,20 @@ typedef int64_t I64;
 
 typedef bool Bool;
 
+/* Unit type */
+typedef void Unit;
+
+/* Void type }:) */
+enum class Void {
+};
+
+/* Pointer types */
+template <typename T>
+using Ref = T&;
+
+template <typename T>
+using Ptr = T*;
+
 /* use sensible keywords */
 #define let auto const
 #define var auto
@@ -50,19 +64,3 @@ inline constexpr detail::ignore_t ignore; // 'const' only until C++17
 #define fst std::get<0>
 #define snd std::get<1>
 #define thr std::get<2>
-
-/* use sensible data typing */
-template <typename T>
-using Ref = T&;
-
-template <typename T>
-using Ptr = T*;
-
-/* Unit type */
-enum class Unit {
-	unit
-};
-
-/* Void type }:) */
-enum class Void {
-};
