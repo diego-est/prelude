@@ -21,12 +21,23 @@ Furthermore, for consistency, all types should begin with capital letters.
 | `F32`     | `float` |
 | `F64`     | `double` |
 
+These changes beg the question: What is wrong with `int`?
+Well `int` would be a perfectly valid type if C++ supported Big Integers like
+Java does. The problem is `int` is fixed to a type that is _sometimes_ 32-bits
+and other times something else. I think this is very inelegant and needlessly
+terse. It is better to simply know what kind of integer and bit-width it takes
+up.
+
+The only exception to this rule being `Size` since we do want to preserve the
+ability to scale depending on what system runs the binary.
+
 ### Other Types
 | Prelude   | Vanilla |
 |-----------|---------|
 | `Unit`    | `void` |
 | `Void`    | N/A |
 | `Bool`    | `bool` |
+| `Char`    | `char` |
 | `Ptr<T>`  | `T*` |
 | `Ref<T>`  | `T&` |
 | `Vector`  | `std::vector<T>` |
@@ -44,7 +55,7 @@ standard library, for example `std::unique_ptr<T>`.
 |-----------|---------|
 | `let`     | `auto const` |
 | `var`     | `auto` |
-| `fn`      | `[[nodiscard]] [[pure]] auto` |
+| `fn`      | `[[nodiscard, gnu::const]] auto` |
 | `proc`    | `[[nodiscard]] auto` |
 | `ignored = foo()` | `static_cast<void>(foo())`
 | `fst`     | `std::get<0>` |
@@ -59,18 +70,19 @@ variables.
 
 All functions should be `[[nodiscard]]` and be annotated with trailing return
 types.
-If you need to ignore the return value of a function then use `ignored = ...` to
+If you need to ignore the return value of a function then use `ignore = ...` to
 explicitly ignore it.
 Additionally, the term `fn` (function) should be used in its most literal
 mathematical sense, for a given input it will always produce the same output.
 If you want to do something that requires side effects then use the `proc`
-keyword instead.
+(procedure) keyword instead.
 
 `fst`, `snd` and `thr` naming conventions are taken from Haskell. The motivation
 being that `std::get<#>` is extremely verbose for accessing the
 first/second/third/etc members of that tuple.
 
 # TODO:
-- [x] sensible IO operations
-- [ ] define applicative operations for standard containers
-- [ ] improve declarative and pipeline-esque operations
+- [x] Sensible IO operations
+- [o] Add examples
+- [ ] Define applicative operations for standard containers
+- [ ] Improve declarative and pipeline-esque operations
