@@ -30,28 +30,22 @@ typedef bool Bool;
 typedef char Char;
 
 #include <vector>
-template <typename T>
-using Vector = std::vector<T>;
+template <typename T> using Vector = std::vector<T>;
 
 #include <string>
 using String = std::string;
 using namespace std::string_literals;
 
 /* Unit type */
-enum class Unit {
-	unit
-};
+enum class Unit { unit };
 
 /* Void type }:) */
-enum class Void {
-};
+enum class Void {};
 
 /* Pointer types */
-template <typename T>
-using Ref = T&;
+template <typename T> using Ref = T&;
 
-template <typename T>
-using Ptr = T*;
+template <typename T> using Ptr = T*;
 
 /* use sensible keywords */
 #define let auto const
@@ -64,12 +58,15 @@ using Ptr = T*;
  * https://en.cppreference.com/w/cpp/utility/tuple/ignore
  */
 namespace detail {
-	struct ignore_t {
-		template <typename T>
-		constexpr // required since C++14
-		void operator = (T&&) const noexcept {}
-	};
-}
+struct ignore_t {
+	template <typename T>
+	constexpr // required since C++14
+	    void
+	    operator=(T&&) const noexcept
+	{
+	}
+};
+} // namespace detail
 inline constexpr detail::ignore_t ignore; // 'const' only until C++17
 
 /* use sensible tuple managing functions */
@@ -80,13 +77,13 @@ inline constexpr detail::ignore_t ignore; // 'const' only until C++17
 /* Sensible IO */
 #include <iostream>
 
-proc print(let &x) noexcept -> Unit
+proc print(let& x) noexcept -> Unit
 {
 	std::cout << x;
 	return Unit();
 }
 
-proc println(let &x) noexcept -> Unit
+proc println(let& x) noexcept -> Unit
 {
 	std::cout << x << std::endl;
 	return Unit();
