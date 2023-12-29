@@ -3,7 +3,7 @@
  *     Filename:  prelude.hpp
  *  Description:  C++ sensible prelude
  *       Author:  Diego A. Estrada Rivera
- *      Version:  0.0.1
+ *      Version:  0.0.2
  *
  * ======================================================================== */
 #pragma once
@@ -27,9 +27,20 @@ typedef int32_t I32;
 typedef int64_t I64;
 
 typedef bool Bool;
+typedef char Char;
+
+#include <vector>
+template <typename T>
+using Vector = std::vector<T>;
+
+#include <string>
+using String = std::string;
+using namespace std::string_literals;
 
 /* Unit type */
-typedef void Unit;
+enum class Unit {
+	unit
+};
 
 /* Void type }:) */
 enum class Void {
@@ -45,8 +56,9 @@ using Ptr = T*;
 /* use sensible keywords */
 #define let auto const
 #define var auto
-#define fn [[nodiscard]] auto constexpr
+#define fn [[nodiscard, gnu::const]] auto
 #define proc [[nodiscard]] auto
+#define Inst auto
 
 /* Apparently this isn't included in <tuple>
  * https://en.cppreference.com/w/cpp/utility/tuple/ignore
@@ -64,3 +76,22 @@ inline constexpr detail::ignore_t ignore; // 'const' only until C++17
 #define fst std::get<0>
 #define snd std::get<1>
 #define thr std::get<2>
+
+/* Sensible IO */
+#include <iostream>
+
+proc print(let &x) noexcept -> Unit
+{
+	std::cout << x;
+	return Unit();
+}
+
+proc println(let &x) noexcept -> Unit
+{
+	std::cout << x << std::endl;
+	return Unit();
+}
+
+proc getChar() noexcept -> Char;
+
+proc getLine() noexcept -> String;

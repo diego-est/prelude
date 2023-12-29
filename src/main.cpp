@@ -11,7 +11,7 @@
 
 proc main() noexcept -> I32
 {
-	std::cout << "Hello world!\n";
+	ignore = println("Hello world!");
 	return 0;
 }
 

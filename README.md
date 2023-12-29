@@ -29,18 +29,22 @@ Furthermore, for consistency, all types should begin with capital letters.
 | `Bool`    | `bool` |
 | `Ptr<T>`  | `T*` |
 | `Ref<T>`  | `T&` |
+| `Vector`  | `std::vector<T>` |
+| `String`  | `std::string` |
 
 In most situations, it is clearer to write the type as a `Ptr<T>` than a `T*`.
 Same goes for `Ref<T>`.
 This also remains consistent with the implementation of smart pointers in the
 standard library, for example `std::unique_ptr<T>`.
 
+`std::string_literals` are enabled by default.
+
 ## Keywords
 | Prelude   | Vanilla |
 |-----------|---------|
 | `let`     | `auto const` |
 | `var`     | `auto` |
-| `fn`      | `[[nodiscard]] auto constexpr` |
+| `fn`      | `[[nodiscard]] [[pure]] auto` |
 | `proc`    | `[[nodiscard]] auto` |
 | `ignored = foo()` | `static_cast<void>(foo())`
 | `fst`     | `std::get<0>` |
@@ -62,13 +66,6 @@ explicitly ignore it.
 being that `std::get<#>` is extremely verbose for accessing the
 first/second/third/etc members of that tuple.
 
-NOTE: `constexpr` being used for the `fn` keyword is currently being tested. The
-motivation for this is to achieve something akin to `[[pure]]`.
-
 # TODO:
-- [ ] sensible IO operations
-- [ ] Functor interface
-- [ ] Monoid interface
-- [ ] Applicative interface
-- [ ] Alternative interface
-- [ ] Monad interface ??
+- [x] sensible IO operations
+- [ ] define applicative operations for standard containers

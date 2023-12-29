@@ -1,8 +1,8 @@
 .POSIX:
 
-CXX=clang++
-CXXFLAGS=-Wall -Werror -Wextra
-SRC=src/main.cpp
+CXX=g++
+CXXFLAGS=-fipa-pure-const -O2 -Wall -Werror -Wextra --std=gnu++2b -Wsuggest-attribute=pure -Wsuggest-attribute=const
+SRC=src/*.cpp
 BUILD=build
 
 build: src/main.cpp
