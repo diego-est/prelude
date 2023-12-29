@@ -61,6 +61,10 @@ All functions should be `[[nodiscard]]` and be annotated with trailing return
 types.
 If you need to ignore the return value of a function then use `ignored = ...` to
 explicitly ignore it.
+Additionally, the term `fn` (function) should be used in its most literal
+mathematical sense, for a given input it will always produce the same output.
+If you want to do something that requires side effects then use the `proc`
+keyword instead.
 
 `fst`, `snd` and `thr` naming conventions are taken from Haskell. The motivation
 being that `std::get<#>` is extremely verbose for accessing the
@@ -69,3 +73,4 @@ first/second/third/etc members of that tuple.
 # TODO:
 - [x] sensible IO operations
 - [ ] define applicative operations for standard containers
+- [ ] improve declarative and pipeline-esque operations

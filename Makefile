@@ -1,7 +1,7 @@
 .POSIX:
 
 CXX=g++
-CXXFLAGS=-fipa-pure-const -O2 -Wall -Werror -Wextra --std=gnu++2b -Wsuggest-attribute=pure -Wsuggest-attribute=const
+CXXFLAGS=-fipa-pure-const -O0 -Wall -Werror -Wextra --std=gnu++2b -Wsuggest-attribute=pure -Wsuggest-attribute=const
 SRC=src/*.cpp
 BUILD=build
 

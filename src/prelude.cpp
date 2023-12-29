@@ -13,4 +13,3 @@ proc getChar() noexcept -> Char
 	std::cin >> c;
 	return c;
 }
-
