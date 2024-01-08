@@ -116,11 +116,7 @@ standard library, for example `std::unique_ptr<T>`.
 | `var`     | `auto` |
 | `fn`      | `[[nodiscard, gnu::const]] auto` |
 | `proc`    | `[[nodiscard]] auto` |
-<<<<<<< HEAD
-| `ignored = foo();` | `static_cast<void>(foo());`
-=======
-| `ignore = foo()` | `static_cast<void>(foo())`
->>>>>>> 5a536c35cf60085b9709a71aa2b5240961122046
+| `ignored = foo();` | `static_cast<void>(foo());` |
 | `fst`     | `std::get<0>` |
 | `snd`     | `std::get<1>` |
 | `thr`     | `std::get<2>` |
