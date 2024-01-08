@@ -1,8 +1,10 @@
 .POSIX:
 
 CXX=g++
-CXXFLAGS=-fipa-pure-const -O0 -Wall -Werror -Wextra --std=gnu++2b -Wsuggest-attribute=pure -Wsuggest-attribute=const
-SRC=src/*.cpp
+COMPATFLAGS=-fipa-pure-const
+WARNFLAGS=-Wall -Werror -Wextra -Wsuggest-attribute=pure -Wsuggest-attribute=const
+CXXFLAGS=-O0 --std=gnu++2b $(COMPATFLAGS) $(WARNFLAGS)
+SRC=src/prelude.cpp src/main.cpp
 BUILD=build
 
 build: src/main.cpp
@@ -13,5 +15,9 @@ run: build
 
 format:
 	clang-format -i $(SRC)
+
+modules:
+	echo "modules.sh should be executable"
+	./modules.sh
 
 .PHONY: build run format
