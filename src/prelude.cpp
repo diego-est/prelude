@@ -7,11 +7,14 @@
  *
  * ======================================================================== */
 #include "prelude.hpp"
+#include <span>
 
 /* type-safe main */
-I32 main(const I32 argc, const Handle<const CString> argv) {
+I32 main(const I32 argc, const Handle<const CString> argv)
+{
 	proc Main(std::span<const std::string_view>) noexcept -> I32;
-	let args = std::vector<std::string_view>(argv, std::next(argv, static_cast<std::ptrdiff_t>(argc)));
+	let args = std::vector<std::string_view>(
+	    argv, std::next(argv, static_cast<std::ptrdiff_t>(argc)));
 	return Main(args);
 }
 

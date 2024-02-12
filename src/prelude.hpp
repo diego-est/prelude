@@ -8,27 +8,6 @@
  * ======================================================================== */
 #pragma once
 
-/* === Generic includes === */
-#ifndef CONTAINERS
-	#include <unordered_map>
-	#include <unordered_set>
-	#include <queue>
-	#include <stack>
-	#include <list>
-	#include <span>
-#endif
-
-#ifndef ALGORITHMS
-	#include <algorithm>
-	#include <ranges>
-	#include <numeric>
-#endif
-
-#ifndef IO
-	#include <fstream>
-	#include <format>
-#endif
-
 /* === Numeric Types === */
 #include <cstdint>
 #include <limits.h>
@@ -50,9 +29,9 @@ typedef __float128 F128;
 
 // decimal floating points
 // see decimal32/64/128 in https://en.wikipedia.org/wiki/IEEE_754
-typedef float __attribute__((mode(SD))) D32;
-typedef float __attribute__((mode(DD))) D64;
-typedef float __attribute__((mode(TD))) D128;
+//typedef float __attribute__((mode(SD))) D32;
+//typedef float __attribute__((mode(DD))) D64;
+//typedef float __attribute__((mode(TD))) D128;
 
 /* Integer */
 typedef uint8_t U8;
@@ -94,8 +73,11 @@ template <typename T> using Ref = T&;
 template <typename T> using Handle = T*;
 
 /* === Keywords === */
+template <class T>
+concept Auto = true;
 #define let auto const
 #define var auto
+
 #define fn [[nodiscard, gnu::const]] auto
 #define proc [[nodiscard]] auto
 
@@ -120,11 +102,30 @@ inline constinit const detail::ignore_t ignore; // changed to constinit
 #define thr std::get<2>
 
 /* === Miscellaneous Functions */
-template <class D, class C>
-fn memoize(let& op) noexcept
+#include <concepts>
+#include <type_traits>
+#include <unordered_map>
+
+// key_hash comes from this stack overflow: https://stackoverflow.com/questions/20834838/using-tuple-in-unordered-map
+// this is necessary so we can index the hashmap using tuples
+template <class... Types> struct n_tuple_key_hash {
+	fn operator()(std::tuple<Types...> const& args) const noexcept -> size_t
+	{
+		return std::apply([](var... t) { return (t ^ ...); }, args);
+	}
+};
+
+template <class... Types> fn memoize(let&& op) noexcept
 {
-	static var mp = std::unordered_map<D, C>();
-	return [=](D const& x) noexcept { return mp.contains(x)? mp.at(x) : mp[x] = op(x); };
+	static var mp =
+	    std::unordered_map<std::tuple<Types...>,
+			       std::invoke_result_t<decltype(op), Types...>,
+			       n_tuple_key_hash<Types...>>();
+
+	return [&](Types... types) noexcept {
+		let& t = std::make_tuple(types...);
+		return mp.contains(t) ? mp.at(t) : mp[t] = op(types...);
+	};
 }
 
 /* Sensible IO */
